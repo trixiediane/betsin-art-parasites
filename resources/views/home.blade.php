@@ -1,14 +1,5 @@
 <x-app-layout>
     <div class="container">
-        <a class="dropdown-item" href="{{ route('logout') }}"
-            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-            {{ __('Logout') }}
-        </a>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-        </form>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -27,4 +18,13 @@
             </div>
         </div>
     </div>
+    <a class="dropdown-item" href="{{ route('logout') }}"
+        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+        {{ __('Logout') }}
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 </x-app-layout>

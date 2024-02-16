@@ -46,8 +46,6 @@
 
 <body class="font-sans antialiased">
 
-    @include('layouts.navigation')
-
     <div class="bg-gray-100">
 
         {{-- <!-- Page Heading -->
@@ -67,6 +65,7 @@
     </div>
 
     {{-- @include('layouts.footer') --}}
+
 
 </body>
 

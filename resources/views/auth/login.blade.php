@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <div class="container">
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
             <div class="container">
@@ -69,11 +69,11 @@
                                             {{ __('Login') }}
                                         </button>
 
-                                        @if (Route::has('password.request'))
+                                        {{-- @if (Route::has('password.request'))
                                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                     <div class="col-12 mb-2">
                                         <p class="small mb-0">Don't have account? <a
@@ -100,4 +100,4 @@
         </section>
 
     </div>
-</x-app-layout>
+</x-guest-layout>
