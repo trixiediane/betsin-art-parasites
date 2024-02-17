@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -89,7 +91,6 @@ class UserController extends Controller
             return response()->json(['text' => 'There is an error updating user information.', 'error' => $e->getMessage(), 'status' =>  400]);
         }
     }
-
     /**
      * Remove the specified resource from storage.
      */

@@ -49,10 +49,10 @@
                                         Profile</button>
                                 </li>
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-settings">Settings</button>
-                                </li>
+                                </li> --}}
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade pt-3" id="profile-settings">
+                                {{-- <div class="tab-pane fade pt-3" id="profile-settings">
 
                                     <!-- Settings Form -->
                                     <form>
@@ -153,44 +153,54 @@
                                         </div>
                                     </form><!-- End settings Form -->
 
-                                </div>
+                                </div> --}}
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
                                     <!-- Change Password Form -->
-                                    <form>
+                                    <div class="row mb-3">
+                                        <label for="old_password" class="col-md-4 col-lg-3 col-form-label">Current
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="old_password" type="password" class="form-control"
+                                                id="old_password">
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="old_password" style="display:none"></i>
+                                        </div>
+                                    </div>
 
-                                        <div class="row mb-3">
-                                            <label for="currentPassword"
-                                                class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
-                                                    id="currentPassword">
+                                    <div class="row mb-3">
+                                        <label for="new_password" class="col-md-4 col-lg-3 col-form-label">New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="new_password" type="password" class="form-control"
+                                                id="new_password">
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="new_password" style="display:none"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="confirm_password"
+                                            class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="confirm_password" type="password" class="form-control"
+                                                id="confirm_password">
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="confirm_password" style="display:none"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4 col-lg-5">
+                                        </div>
+                                        <button onclick="updatePassword()"
+                                            class="col-md-4 col-lg-3 btn btn-primary">Change
+                                            Password</button>
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="spinner-border" role="status" style="display: none;">
+                                                <span class="visually-hidden">Loading...</span>
                                             </div>
                                         </div>
-
-                                        <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                                Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control"
-                                                    id="newPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="renewPassword"
-                                                class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control"
-                                                    id="renewPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Change Password</button>
-                                        </div>
-                                    </form><!-- End Change Password Form -->
-
+                                    </div>
                                 </div>
                             </div><!-- End Bordered Tabs -->
                         </div>
@@ -205,6 +215,68 @@
             var id = user_data.id;
             showUser(id);
             editUser(id);
+
+
+            function updatePassword() {
+                $(".spinner-border").show();
+                var csrf = $('meta[name="csrf-token"]').attr('content');
+                // console.log(csrf)
+                $.ajax({
+                    type: "PUT",
+                    url: "{{ route('update.password', ['id' => 'id']) }}".replace('id', id),
+                    dataType: "json",
+                    headers: {
+                        "X-CSRF-TOKEN": csrf
+                    },
+                    data: {
+                        old_password: $("#old_password").val(),
+                        new_password: $("#new_password").val(),
+                        confirm_password: $("#confirm_password").val(),
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if (response.status == 200) {
+                            Swal.fire({
+                                title: "Success",
+                                text: response.text,
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then(() => {
+                                showUser(id);
+                                editUser(id);
+                                $(".errors").hide();
+                                $(".spinner-border").hide();
+                                $("#old_password").val("");
+                                $("#new_password").val("");
+                                $("#confirm_password").val("");
+                            });
+                        } else if (response.status == 400) {
+                            Swal.fire({
+                                title: "Error",
+                                text: response.text,
+                                icon: 'error',
+                                confirmButtonText: 'Ok',
+                            }).then(() => {
+                                $(".spinner-border").hide();
+                            })
+                        }
+                    },
+                    error: function(response) {
+                        console.log("error");
+                        $(".errors").hide();
+                        $(".spinner-border").hide();
+                        $(".errors").each(function(index, element) {
+                            Object.entries(response.responseJSON.errors).forEach(error_element => {
+                                console.log(error_element);
+                                if (error_element[0] == $(element).data('field')) {
+                                    $(element).text(error_element[1]);
+                                    $(element).show();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
 
             function showUser(id) {
                 $.ajax({
@@ -308,7 +380,6 @@
                                 confirmButtonText: 'Ok',
                             })
                         }
-
                     },
                     error: function(response) {
                         console.log("error");
