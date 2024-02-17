@@ -242,8 +242,6 @@
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             }).then(() => {
-                                showUser(id);
-                                editUser(id);
                                 $(".errors").hide();
                                 $(".spinner-border").hide();
                                 $("#old_password").val("");

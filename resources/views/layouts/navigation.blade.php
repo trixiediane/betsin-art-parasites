@@ -183,6 +183,16 @@
                     </li>
 
                     <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('post.index') }}">
+                            <i class="bi bi-person"></i>
+                            <span>Submit an Art</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
                         <a class="dropdown-item d-flex align-items-center" href="{{ route('user.index') }}">
                             <i class="bi bi-person"></i>
                             <span>My Profile</span>
@@ -191,7 +201,6 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-
                     {{-- <li>
                         <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                             <i class="bi bi-gear"></i>
