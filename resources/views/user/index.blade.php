@@ -217,55 +217,57 @@
             editUser(id);
 
 
-            function updatePassword() {
+            async function updatePassword() {
                 $(".spinner-border").show();
-                var csrf = $('meta[name="csrf-token"]').attr('content');
-                // console.log(csrf)
-                $.ajax({
-                    type: "PUT",
-                    url: "{{ route('update.password', ['id' => 'id']) }}".replace('id', id),
-                    dataType: "json",
-                    headers: {
-                        "X-CSRF-TOKEN": csrf
-                    },
-                    data: {
-                        old_password: $("#old_password").val(),
-                        new_password: $("#new_password").val(),
-                        confirm_password: $("#confirm_password").val(),
-                    },
-                    success: function(response) {
-                        // console.log(response);
-                        if (response.status == 200) {
-                            Swal.fire({
-                                title: "Success",
-                                text: response.text,
-                                icon: 'success',
-                                confirmButtonText: 'Ok'
-                            }).then(() => {
-                                $(".errors").hide();
-                                $(".spinner-border").hide();
-                                $("#old_password").val("");
-                                $("#new_password").val("");
-                                $("#confirm_password").val("");
-                            });
-                        } else if (response.status == 400) {
-                            Swal.fire({
-                                title: "Error",
-                                text: response.text,
-                                icon: 'error',
-                                confirmButtonText: 'Ok',
-                            }).then(() => {
-                                $(".spinner-border").hide();
-                            })
-                        }
-                    },
-                    error: function(response) {
-                        console.log("error");
-                        $(".errors").hide();
-                        $(".spinner-border").hide();
+
+                try {
+                    var csrf = $('meta[name="csrf-token"]').attr('content');
+
+                    const response = await $.ajax({
+                        type: "PUT",
+                        url: "{{ route('update.password', ['id' => 'id']) }}".replace('id', id),
+                        dataType: "json",
+                        headers: {
+                            "X-CSRF-TOKEN": csrf
+                        },
+                        data: {
+                            old_password: $("#old_password").val(),
+                            new_password: $("#new_password").val(),
+                            confirm_password: $("#confirm_password").val(),
+                        },
+                    });
+
+                    if (response.status === 200) {
+                        Swal.fire({
+                            title: "Success",
+                            text: response.text,
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then(() => {
+                            $(".errors").hide();
+                            $(".spinner-border").hide();
+                            $("#old_password").val("");
+                            $("#new_password").val("");
+                            $("#confirm_password").val("");
+                        });
+                    } else if (response.status === 400) {
+                        Swal.fire({
+                            title: "Error",
+                            text: response.text,
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                        }).then(() => {
+                            $(".spinner-border").hide();
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    $(".errors").hide();
+                    $(".spinner-border").hide();
+
+                    if (error.responseJSON && error.responseJSON.errors) {
                         $(".errors").each(function(index, element) {
-                            Object.entries(response.responseJSON.errors).forEach(error_element => {
-                                console.log(error_element);
+                            Object.entries(error.responseJSON.errors).forEach(error_element => {
                                 if (error_element[0] == $(element).data('field')) {
                                     $(element).text(error_element[1]);
                                     $(element).show();
@@ -273,8 +275,9 @@
                             });
                         });
                     }
-                });
+                }
             }
+
 
             function showUser(id) {
                 $.ajax({
