@@ -36,7 +36,32 @@
     <!-- JQuery Plugin -->
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
-
+    <script>
+        @php
+            // Get only specific data from user. Null safe.
+            $user = auth()->check() ? json_encode(Illuminate\Support\Arr::only(auth()->user()->toArray(), ['id', 'name', 'username'])) : null;
+        @endphp
+        @if (auth()->check())
+            //if(localStorage.getItem('user_data') === null) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('me') }}",
+                async: false,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    localStorage.setItem('user_data', JSON.stringify(response));
+                }
+            });
+            //}
+        @else
+            window.location.href = "{{ route('login') }}";
+        @endif
+        // Load user_data to a variable
+        var user_data = JSON.parse(localStorage.getItem('user_data'));
+        console.log(user_data.id);
+    </script>
 
     <!-- Custom page scripts stack -->
     @stack('styles')

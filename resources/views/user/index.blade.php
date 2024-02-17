@@ -63,181 +63,50 @@
                             <div class="tab-content pt-2">
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">About</h5>
-                                    <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores
-                                        cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt
-                                        iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea
-                                        saepe at unde.</p>
-
-                                    <h5 class="card-title">Profile Details</h5>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                        <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Company</div>
-                                        <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Job</div>
-                                        <div class="col-lg-9 col-md-8">Web Designer</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Country</div>
-                                        <div class="col-lg-9 col-md-8">USA</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Address</div>
-                                        <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Phone</div>
-                                        <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                                    </div>
-
+                                    {{-- Profile Overview --}}
                                 </div>
 
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                                    <!-- Profile Edit Form -->
-                                    <form>
-                                        <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile
-                                                Image</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <img src="assets/img/profile-img.jpg" alt="Profile">
-                                                <div class="pt-2">
-                                                    <a href="#" class="btn btn-primary btn-sm"
-                                                        title="Upload new profile image"><i
-                                                            class="bi bi-upload"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-sm"
-                                                        title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                                </div>
-                                            </div>
+                                    <div class="row mb-3">
+                                        <label for="bio" class="col-md-4 col-lg-3 col-form-label">Bio</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="bio" class="form-control" id="bio" style="height: 100px"></textarea>
                                         </div>
+                                    </div>
 
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full
-                                                Name</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="fullName" type="text" class="form-control"
-                                                    id="fullName" value="Kevin Anderson">
-                                            </div>
+                                    <div class="row mb-3">
+                                        <label for="name" class="col-md-4 col-lg-3 col-form-label">Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="name" type="text" class="form-control" id="name"
+                                                value="">
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="name" style="display:none"></i>
                                         </div>
+                                    </div>
 
-                                        <div class="row mb-3">
-                                            <label for="about"
-                                                class="col-md-4 col-lg-3 col-form-label">About</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                                            </div>
+                                    <div class="row mb-3">
+                                        <label for="username" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="username" type="text" class="form-control" id="username"
+                                                value="">
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="username" style="display:none"></i>
                                         </div>
+                                    </div>
 
-                                        <div class="row mb-3">
-                                            <label for="company"
-                                                class="col-md-4 col-lg-3 col-form-label">Company</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="company" type="text" class="form-control"
-                                                    id="company" value="Lueilwitz, Wisoky and Leuschke">
-                                            </div>
+                                    <div class="row mb-3">
+                                        <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="email" class="form-control" id="email"
+                                                value="">
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="email" style="display:none"></i>
                                         </div>
+                                    </div>
 
-                                        <div class="row mb-3">
-                                            <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="job" type="text" class="form-control"
-                                                    id="Job" value="Web Designer">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Country"
-                                                class="col-md-4 col-lg-3 col-form-label">Country</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="country" type="text" class="form-control"
-                                                    id="Country" value="USA">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Address"
-                                                class="col-md-4 col-lg-3 col-form-label">Address</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="address" type="text" class="form-control"
-                                                    id="Address" value="A108 Adam Street, New York, NY 535022">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Phone"
-                                                class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="phone" type="text" class="form-control"
-                                                    id="Phone" value="(436) 486-3538 x29071">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Email"
-                                                class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control"
-                                                    id="Email" value="k.anderson@example.com">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control"
-                                                    id="Twitter" value="https://twitter.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control"
-                                                    id="Facebook" value="https://facebook.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control"
-                                                    id="Instagram" value="https://instagram.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control"
-                                                    id="Linkedin" value="https://linkedin.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </form><!-- End Profile Edit Form -->
-
+                                    <div class="text-right mt-3">
+                                        <button onclick="updateUser()" class="btn btn-primary">Save Changes</button>
+                                    </div>
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-settings">
@@ -323,15 +192,139 @@
                                     </form><!-- End Change Password Form -->
 
                                 </div>
-
                             </div><!-- End Bordered Tabs -->
-
                         </div>
                     </div>
 
                 </div>
             </div>
         </section>
-
     </main><!-- End #main -->
+    @push('scripts')
+        <script>
+            var id = user_data.id;
+            showUser(id);
+            editUser(id);
+
+            function showUser(id) {
+                $.ajax({
+                    url: "{{ route('user.show', ['user' => 'id']) }}".replace('id', id),
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        // console.log(response);
+                        var bio = response.data.bio ? response.data.bio : "Empty bio";
+                        $("#profile-overview").empty();
+                        $("#profile-overview").append(`
+                        <h5 class="card-title">About</h5>
+                        <p class="small fst-italic">${bio}</p>
+                        <h5 class="card-title">Profile Details</h5>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 label ">Name</div>
+                            <div class="col-lg-9 col-md-8">${response.data.name}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 label ">Username</div>
+                            <div class="col-lg-9 col-md-8">${response.data.username}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 label ">Email</div>
+                            <div class="col-lg-9 col-md-8">${response.data.email}</div>
+                        </div>
+                        `);
+                    },
+                    error: function(response) {
+                        console.log("error");
+                        console.log(response);
+                        Swal.fire({
+                            title: "Error",
+                            text: response.text,
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                        });
+                    }
+                });
+            }
+
+            function editUser(id) {
+                var csrf = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: "{{ route('user.edit', ['user' => 'id']) }}".replace('id', id),
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        // console.log(response);
+                        // console.log(csrf);
+                        $("#bio").val(response.data.bio);
+                        $("#name").val(response.data.name);
+                        $("#username").val(response.data.username);
+                        $("#email").val(response.data.email);
+                    },
+                    error: function(response) {
+                        console.log("error");
+                        console.log(response);
+                        Swal.fire({
+                            title: "Error",
+                            text: response.text,
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                        });
+                    }
+                });
+            }
+
+            function updateUser() {
+                var csrf = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    type: "PUT",
+                    url: "{{ route('user.update', ['user' => 'id']) }}".replace('id', id),
+                    dataType: "json",
+                    headers: {
+                        "X-CSRF-TOKEN": csrf
+                    },
+                    data: {
+                        bio: $("#bio").val(),
+                        name: $("#name").val(),
+                        username: $("#username").val(),
+                        email: $("#email").val(),
+                    },
+                    success: function(response) {
+                        if (response.status == 200) {
+                            Swal.fire({
+                                title: "Success",
+                                text: response.text,
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then(() => {
+                                showUser(id);
+                                editUser(id);
+                                $(".errors").hide();
+                            });
+                        } else if (response.status == 400) {
+                            Swal.fire({
+                                title: "Error",
+                                text: response.text,
+                                icon: 'error',
+                                confirmButtonText: 'Ok',
+                            })
+                        }
+
+                    },
+                    error: function(response) {
+                        console.log("error");
+                        $(".errors").hide();
+                        $(".errors").each(function(index, element) {
+                            Object.entries(response.responseJSON.errors).forEach(error_element => {
+                                console.log(error_element);
+                                if (error_element[0] == $(element).data('field')) {
+                                    $(element).text(error_element[1]);
+                                    $(element).show();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        </script>
+    @endpush
 </x-app-layout>
