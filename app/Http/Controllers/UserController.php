@@ -16,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user/index');
+        $user = auth()->user(); // Assuming you're using Laravel's authentication
+        return view('user/index', compact('user'));
     }
 
     public function getUserDetails()
@@ -76,21 +77,37 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
+        //
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+
+        $request->validate([
+            'avatar' => 'image|mimes:jpeg,png,jpg|max:2048', // Adjust file size and types as needed
+        ]);
+
         try {
             $user = User::findOrFail($id);
+            $user->bio = $request->bio;
+            $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
 
-            $user->update([
-                'bio' => $request->bio,
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email
-            ]);
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $avatarPath = $avatar->store('avatars', 'public'); // Store the file in the 'avatars' directory within the 'public' disk
+                $user->avatar = $avatarPath;
+            }
 
-            return response()->json(['text' => 'Successfully updated user information.', 'status' => 200]);
+            $user->save();
+
+            return response()->json(['text' => 'Successfully updated user information.', 'data' => $user, 'status' => 200]);
         } catch (Exception $e) {
-            return response()->json(['text' => 'There is an error updating user information.', 'error' => $e->getMessage(), 'status' =>  400]);
+            return response()->json(['text' => 'There is an error updating the user information.', 'error' => $e->getMessage(), 'status' => 400]);
         }
     }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -29,6 +29,7 @@ Route::post('/me', [UserController::class, 'getUserDetails'])->middleware('auth'
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', UserController::class);
+    Route::post('/update-user/{id}', [UserController::class, 'updateUser'])->name('update-user');
     Route::put('/password-reset/{id}', [PasswordResetController::class, 'updatePassword'])->name('update.password');
 })->prefix('user');
 

@@ -18,15 +18,21 @@
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                            <h2>Kevin Anderson</h2>
-                            <h3>Web Designer</h3>
-                            <div class="social-links mt-2">
+                            @if ($user->avatar)
+                                <img id="avatar-img" src="{{ asset('storage/' . $user->avatar) }}" alt="Profile"
+                                    class="rounded-circle mw-10">
+                            @else
+                                <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle mw-10">
+                            @endif
+
+                            <h2 id="headerName">Kevin Anderson</h2>
+                            <h3 id="headerBio">Web Designer</h3>
+                            {{-- <div class="social-links mt-2">
                                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -101,6 +107,17 @@
                                                 value="">
                                             <i id="errors" class="errors text-danger font-weight-bold"
                                                 data-field="email" style="display:none"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="avatar" class="col-md-4 col-lg-3 col-form-label">Avatar</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="file" id="avatar">
+                                            </div>
+                                            <i id="errors" class="errors text-danger font-weight-bold"
+                                                data-field="avatar" style="display:none"></i>
                                         </div>
                                     </div>
 
@@ -285,6 +302,11 @@
                     method: "GET",
                     dataType: "json",
                     success: function(response) {
+                        $("#headerName").empty();
+                        $("#headerBio").empty();
+
+                        $("#headerName").append(response.data.name);
+                        $("#headerBio").append(response.data.bio);
                         // console.log(response);
                         var bio = response.data.bio ? response.data.bio : "Empty bio";
                         $("#profile-overview").empty();
@@ -347,20 +369,34 @@
             }
 
             function updateUser() {
+                let message = $("#message").val();
+                let avatar = $("#avatar")[0];
+                let attachment = avatar.files[0];
+                let formData = new FormData();
+                let bio = $("#bio").val();
+                let username = $("#username").val();
+                let name = $("#name").val();
+                let email = $("#email").val();
                 var csrf = $('meta[name="csrf-token"]').attr('content');
+
+                formData.append('bio', bio);
+                formData.append('username', username);
+                formData.append('name', name);
+                formData.append('email', email);
+
+                if (attachment) {
+                    formData.append('avatar', attachment);
+                }
+
                 $.ajax({
-                    type: "PUT",
-                    url: "{{ route('user.update', ['user' => 'id']) }}".replace('id', id),
-                    dataType: "json",
+                    type: "POST",
+                    url: "{{ route('update-user', ['id' => 'id']) }}".replace('id', id),
                     headers: {
                         "X-CSRF-TOKEN": csrf
                     },
-                    data: {
-                        bio: $("#bio").val(),
-                        name: $("#name").val(),
-                        username: $("#username").val(),
-                        email: $("#email").val(),
-                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function(response) {
                         if (response.status == 200) {
                             Swal.fire({
@@ -371,6 +407,14 @@
                             }).then(() => {
                                 showUser(id);
                                 editUser(id);
+                                let user = response.data;
+                                if (user.avatar) {
+                                    $('#avatar-img').attr('src', '{{ asset('storage/') }}' + '/' + user
+                                        .avatar);
+                                } else {
+                                    // If user doesn't have an avatar, fallback to default image
+                                    $('#avatar-img').attr('src', 'assets/img/profile-img.jpg');
+                                }
                                 $(".errors").hide();
                             });
                         } else if (response.status == 400) {
