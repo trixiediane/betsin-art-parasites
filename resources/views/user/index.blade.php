@@ -20,7 +20,7 @@
 
                             @if ($user->avatar)
                                 <img id="avatar-img" src="{{ asset('storage/' . $user->avatar) }}" alt="Profile"
-                                    class="rounded-circle mw-10">
+                                    class="rounded-circle mw-10 ">
                             @else
                                 <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle mw-10">
                             @endif
